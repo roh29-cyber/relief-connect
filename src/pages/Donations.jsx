@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { 
   Heart, 
-  DollarSign, 
+  IndianRupee, 
   Package, 
   Users, 
   MapPin, 
@@ -25,10 +25,10 @@ const Donations = () => {
   const campaigns = [
     {
       id: 1,
-      title: 'Hurricane Relief Fund',
-      description: 'Supporting families affected by recent hurricane damage',
-      raised: 75000,
-      goal: 100000,
+      title: 'Cyclone Relief Fund',
+      description: 'Supporting families affected by recent cyclone damage',
+      raised: 7500000,
+      goal: 10000000,
       donors: 1250,
       urgent: true
     },
@@ -36,8 +36,8 @@ const Donations = () => {
       id: 2,
       title: 'Emergency Shelter Supplies',
       description: 'Providing essential supplies for temporary shelters',
-      raised: 45000,
-      goal: 60000,
+      raised: 4500000,
+      goal: 6000000,
       donors: 890,
       urgent: false
     },
@@ -45,8 +45,8 @@ const Donations = () => {
       id: 3,
       title: 'Medical Equipment Fund',
       description: 'Purchasing medical supplies for disaster response',
-      raised: 32000,
-      goal: 50000,
+      raised: 3200000,
+      goal: 5000000,
       donors: 567,
       urgent: true
     }
@@ -132,7 +132,7 @@ const Donations = () => {
               : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
           }`}
         >
-          <DollarSign className="inline h-4 w-4 mr-2" />
+          <IndianRupee className="inline h-4 w-4 mr-2" />
           Donate
         </button>
         <button
@@ -164,7 +164,7 @@ const Donations = () => {
                     : 'border-gray-200 dark:border-gray-600 hover:border-gray-300'
                 }`}
               >
-                <DollarSign className="h-8 w-8 text-primary-600 dark:text-primary-400 mx-auto mb-2" />
+                <IndianRupee className="h-8 w-8 text-primary-600 dark:text-primary-400 mx-auto mb-2" />
                 <h3 className="font-medium text-gray-900 dark:text-white">
                   Monetary Donation
                 </h3>
@@ -241,10 +241,10 @@ const Donations = () => {
                   <div className="mb-4">
                     <div className="flex justify-between text-sm mb-2">
                       <span className="text-gray-600 dark:text-gray-300">
-                        ${campaign.raised.toLocaleString()} raised
+                        ₹{campaign.raised.toLocaleString('en-IN')} raised
                       </span>
                       <span className="text-gray-600 dark:text-gray-300">
-                        ${campaign.goal.toLocaleString()} goal
+                        ₹{campaign.goal.toLocaleString('en-IN')} goal
                       </span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
@@ -276,19 +276,19 @@ const Donations = () => {
                     Donation Amount
                   </label>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-                    {[25, 50, 100, 250].map((amount) => (
+                    {[500, 1000, 2500, 5000].map((amount) => (
                       <button
                         key={amount}
                         type="button"
                         className="py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-lg hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
                       >
-                        ${amount}
+                        ₹{amount.toLocaleString()}
                       </button>
                     ))}
                   </div>
                   <input
                     type="number"
-                    placeholder="Custom amount"
+                    placeholder="Custom amount (₹)"
                     className="input-field"
                   />
                 </div>

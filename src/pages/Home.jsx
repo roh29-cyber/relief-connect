@@ -11,7 +11,10 @@ import {
   Clock
 } from 'lucide-react'
 
+import { useLanguage } from '../contexts/LanguageContext'
+
 const Home = () => {
+  const { t } = useLanguage()
   const quickActions = [
     {
       title: 'Report Missing Person',
@@ -55,9 +58,9 @@ const Home = () => {
       {/* Hero Section */}
       <div className="text-center py-12 px-4">
         <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-          Emergency Response
+          {t.home.heroTitle}
           <span className="block text-primary-600 dark:text-primary-400">
-            When Every Second Counts
+            {t.home.heroSubtitle}
           </span>
         </h1>
         <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
@@ -67,11 +70,11 @@ const Home = () => {
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link to="/ai-assistant" className="btn-primary text-lg px-8 py-3">
-            Get Emergency Help Now
+            {t.home.getHelp}
           </Link>
           <button className="bg-red-600 hover:bg-red-700 text-white font-medium text-lg px-8 py-3 rounded-lg transition-colors duration-200 flex items-center justify-center">
             <AlertTriangle className="mr-2 h-5 w-5" />
-            Report Incident
+            {t.home.reportIncident}
           </button>
         </div>
       </div>
@@ -82,10 +85,10 @@ const Home = () => {
           <AlertTriangle className="h-6 w-6 text-yellow-600 dark:text-yellow-400 mr-3" />
           <div>
             <h3 className="font-semibold text-yellow-800 dark:text-yellow-200">
-              Active Weather Alert
+              {t.home.advisoryTitle}
             </h3>
             <p className="text-yellow-700 dark:text-yellow-300">
-              Severe thunderstorm warning in effect for the region. Stay indoors and avoid travel.
+              {t.home.advisoryBody}
             </p>
           </div>
         </div>
@@ -130,24 +133,24 @@ const Home = () => {
       {/* Recent Updates */}
       <div className="card">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-          Recent Updates
+          {t.home.recentUpdates}
         </h2>
         <div className="space-y-4">
-          {[
+          {[ 
             {
               time: '2 hours ago',
-              title: 'Emergency shelter opened in downtown area',
-              description: 'New facility can accommodate 200 people with full amenities.'
+              title: 'Relief camp opened in district headquarters',
+              description: 'Facility can accommodate 200 people with essential amenities.'
             },
             {
               time: '4 hours ago',
               title: 'Missing person found safe',
-              description: 'John Smith, 45, reported missing yesterday has been located.'
+              description: 'Individual reported missing yesterday has been located by local authorities.'
             },
             {
               time: '6 hours ago',
               title: 'Volunteer training session scheduled',
-              description: 'Join us this weekend for emergency response training.'
+              description: 'Join this weekend for emergency response training in your city.'
             }
           ].map((update, index) => (
             <div key={index} className="flex items-start space-x-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">

@@ -12,8 +12,12 @@ import Feedback from './pages/Feedback'
 import About from './pages/About'
 import LiveUpdates from './pages/LiveUpdates'
 import ResearchCenter from './pages/ResearchCenter'
+import Login from './pages/Login'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { AuthProvider } from './contexts/AuthContext'
+import { DatabaseProvider } from './contexts/DatabaseContext'
+import { LanguageProvider } from './contexts/LanguageContext'
+import LocationGate from './components/LocationGate'
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -21,6 +25,8 @@ function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
+        <DatabaseProvider>
+        <LanguageProvider>
         <Router>
           <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
@@ -38,6 +44,7 @@ function App() {
                     <Route path="/ai-assistant" element={<AIAssistant />} />
                     <Route path="/feedback" element={<Feedback />} />
                     <Route path="/about" element={<About />} />
+                    <Route path="/login" element={<Login />} />
                     <Route path="/live-updates" element={<LiveUpdates />} />
                     <Route path="/research" element={<ResearchCenter />} />
                   </Routes>
@@ -46,8 +53,11 @@ function App() {
             </div>
             
             <EmergencyButton />
+            <LocationGate />
           </div>
         </Router>
+        </LanguageProvider>
+        </DatabaseProvider>
       </AuthProvider>
     </ThemeProvider>
   )

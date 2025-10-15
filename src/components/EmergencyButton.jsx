@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import { Phone, X } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const EmergencyButton = () => {
   const [showModal, setShowModal] = useState(false)
+  const { t } = useLanguage()
 
   const emergencyContacts = [
-    { name: 'Emergency Services', number: '911', description: 'Police, Fire, Medical' },
-    { name: 'Disaster Hotline', number: '1-800-DISASTER', description: '24/7 Disaster Support' },
-    { name: 'Red Cross', number: '1-800-RED-CROSS', description: 'Emergency Assistance' },
-    { name: 'FEMA', number: '1-800-621-3362', description: 'Federal Emergency Management' },
+    { name: 'National Emergency Number', number: '112', description: 'All-in-one: Police, Fire, Medical' },
+    { name: 'Police', number: '100', description: 'Immediate police assistance' },
+    { name: 'Ambulance', number: '108', description: 'Medical emergencies' },
+    { name: 'Fire', number: '101', description: 'Fire emergencies' },
   ]
 
   return (
@@ -26,7 +28,7 @@ const EmergencyButton = () => {
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-red-600 dark:text-red-400">
-                Emergency Contacts
+                {t.emergency.modalTitle}
               </h2>
               <button
                 onClick={() => setShowModal(false)}
@@ -61,8 +63,7 @@ const EmergencyButton = () => {
 
             <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
               <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                <strong>Important:</strong> In life-threatening emergencies, call 911 immediately.
-                This app provides support resources but is not a substitute for emergency services.
+                <strong>{t.emergency.important}</strong> {t.emergency.importantBody}
               </p>
             </div>
           </div>

@@ -2,10 +2,12 @@ import React from 'react'
 import { Menu, Sun, Moon, Heart } from 'lucide-react'
 import { useTheme } from '../contexts/ThemeContext'
 import { useAuth } from '../contexts/AuthContext'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const Header = ({ onMenuClick }) => {
   const { isDark, toggleTheme } = useTheme()
   const { user, logout } = useAuth()
+  const { lang, setLang } = useLanguage()
 
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
@@ -24,16 +26,29 @@ const Header = ({ onMenuClick }) => {
               <Heart className="h-8 w-8 text-primary-600 mr-3" />
               <div>
                 <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                  Disaster Response Hub
+                  {useLanguage().t.header.title}
                 </h1>
                 <p className="text-sm text-gray-500 dark:text-gray-400 hidden sm:block">
-                  Emergency Support & Community Aid
+                  {useLanguage().t.header.tagline}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="flex items-center space-x-4">
+            <select
+              value={lang}
+              onChange={(e) => setLang(e.target.value)}
+              className="hidden sm:block text-sm border border-gray-300 dark:border-gray-600 rounded-md px-2 py-1 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+              aria-label="Select language"
+            >
+              <option value="en">English</option>
+              <option value="hi">हिन्दी</option>
+              <option value="te">తెలుగు</option>
+              <option value="kn">ಕನ್ನಡ</option>
+              <option value="bn">বাংলা</option>
+              <option value="ta">தமிழ்</option>
+            </select>
             <button
               onClick={toggleTheme}
               className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
@@ -51,12 +66,12 @@ const Header = ({ onMenuClick }) => {
                   onClick={logout}
                   className="text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400"
                 >
-                  Logout
+                  {useLanguage().t.header.logout}
                 </button>
               </div>
             ) : (
               <button className="btn-primary text-sm">
-                Sign In
+                {useLanguage().t.header.signIn}
               </button>
             )}
           </div>

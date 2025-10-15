@@ -13,12 +13,18 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [userLocation, setUserLocation] = useState(null)
+  const [shouldPromptLocation, setShouldPromptLocation] = useState(false)
 
   useEffect(() => {
     // Check for stored user session
     const storedUser = localStorage.getItem('user')
     if (storedUser) {
       setUser(JSON.parse(storedUser))
+    }
+    const storedLocation = localStorage.getItem('userLocation')
+    if (storedLocation) {
+      setUserLocation(JSON.parse(storedLocation))
     }
     setLoading(false)
   }, [])
@@ -33,6 +39,10 @@ export const AuthProvider = ({ children }) => {
     }
     setUser(mockUser)
     localStorage.setItem('user', JSON.stringify(mockUser))
+    // After first login, if no location stored, trigger prompt
+    if (!localStorage.getItem('userLocation')) {
+      setShouldPromptLocation(true)
+    }
     return mockUser
   }
 
@@ -50,11 +60,20 @@ export const AuthProvider = ({ children }) => {
     }
     setUser(newUser)
     localStorage.setItem('user', JSON.stringify(newUser))
+    if (!localStorage.getItem('userLocation')) {
+      setShouldPromptLocation(true)
+    }
     return newUser
   }
 
+  const saveUserLocation = (location) => {
+    setUserLocation(location)
+    localStorage.setItem('userLocation', JSON.stringify(location))
+    setShouldPromptLocation(false)
+  }
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, register, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, register, loading, userLocation, saveUserLocation, shouldPromptLocation, setShouldPromptLocation }}>
       {children}
     </AuthContext.Provider>
   )

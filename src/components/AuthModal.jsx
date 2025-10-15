@@ -27,10 +27,13 @@ const AuthModal = ({ onClose }) => {
         ? await login(formData.email, formData.password)
         : await register(formData)
 
-      if (result.success) {
+      // login/register return the user object on success in our mock
+      if (result && (result.id || result.email)) {
         onClose()
-      } else {
+      } else if (result && result.error) {
         setError(result.error || 'Authentication failed')
+      } else {
+        onClose()
       }
     } catch (err) {
       setError('An unexpected error occurred')

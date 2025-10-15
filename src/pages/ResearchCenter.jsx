@@ -57,44 +57,34 @@ const ResearchCenter = () => {
     }
   ]
 
-  const handleResearch = async (e) => {
+  const openYouTubeForTopic = (topic) => {
+    const query = `${topic} India precautions`
+    const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
+
+  const handleResearch = (e) => {
     e.preventDefault()
     if (!searchQuery.trim()) return
-
     setLoading(true)
     try {
-      const response = await fetch('https://builder.empromptu.ai/api_tools/rapid_research', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer 5254d3137bc61704d35e86e9e22c6bc6',
-          'X-Generated-App-ID': '7f6707a3-47ec-40c3-ad3f-1eb7f4da4ffb',
-          'X-Usage-Key': 'cbdf28b6a6e122cf39846203916f8199'
-        },
-        body: JSON.stringify({
-          goal: `Research and provide comprehensive information about: ${searchQuery}. Include recent studies, best practices, statistics, and actionable insights related to disaster response and humanitarian aid.`
-        })
-      })
-
-      const result = await response.json()
-      if (result.value) {
-        setSearchResults(result.value)
-      }
-    } catch (error) {
-      console.error('Error conducting research:', error)
-      setSearchResults('Error conducting research. Please try again.')
+      const q = `${searchQuery} site:ndma.gov.in OR site:imd.gov.in OR site:who.int OR site:unicef.org`
+      // Use DuckDuckGo's lucky redirect to open the top result directly
+      const luckyUrl = `https://duckduckgo.com/?q=!ducky+${encodeURIComponent(q)}`
+      window.open(luckyUrl, '_blank', 'noopener,noreferrer')
+      setSearchResults(`Opened top result for: ${searchQuery}`)
     } finally {
       setLoading(false)
     }
   }
 
   const quickSearchTopics = [
-    'Earthquake preparedness strategies',
-    'Flood response best practices',
-    'Hurricane evacuation procedures',
-    'Wildfire prevention methods',
-    'Emergency communication systems',
-    'Post-disaster mental health support'
+    'Earthquake safety guidelines India',
+    'Flood response best practices NDMA',
+    'Cyclone preparedness IMD advisory',
+    'Heatwave health advisory India',
+    'Landslide risk mitigation NDMA',
+    'Post-disaster mental health support India'
   ]
 
   return (
@@ -218,12 +208,14 @@ const ResearchCenter = () => {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {category.topics.map((topic, topicIndex) => (
-                    <span
+                    <button
                       key={topicIndex}
-                      className="text-xs bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-2 py-1 rounded-full"
+                      onClick={() => openYouTubeForTopic(topic)}
+                      className="text-xs bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-2 py-1 rounded-full hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors"
+                      title={`Watch YouTube videos about ${topic}`}
                     >
                       {topic}
-                    </span>
+                    </button>
                   ))}
                 </div>
               </div>

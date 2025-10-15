@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { AlertTriangle, Radio, MapPin, Clock, Filter, RefreshCw } from 'lucide-react'
 import { useDatabase } from '../contexts/DatabaseContext'
+import { useLanguage } from '../contexts/LanguageContext'
+import { useAuth } from '../contexts/AuthContext'
 
 const LiveUpdates = () => {
   const [alerts, setAlerts] = useState([])
@@ -8,6 +10,9 @@ const LiveUpdates = () => {
   const [filter, setFilter] = useState('all')
   const [lastUpdated, setLastUpdated] = useState(new Date())
   const { executeQuery } = useDatabase()
+  const { t } = useLanguage()
+  const { userLocation } = useAuth()
+  const lastSeenAlertIdsRef = useRef(new Set())
 
   const severityColors = {
     critical: 'bg-red-100 dark:bg-red-900/20 border-red-300 dark:border-red-700 text-red-800 dark:text-red-200',
@@ -30,6 +35,13 @@ const LiveUpdates = () => {
     return () => clearInterval(interval)
   }, [])
 
+  // Request notification permission once when mounting
+  useEffect(() => {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission().catch(() => {})
+    }
+  }, [])
+
   const loadAlerts = async () => {
     try {
       // First, create some sample alerts if none exist
@@ -49,7 +61,9 @@ const LiveUpdates = () => {
       `)
       
       if (result.success) {
-        setAlerts(result.data)
+        const newAlerts = result.data
+        notifyForNewCriticalHigh(newAlerts)
+        setAlerts(newAlerts)
         setLastUpdated(new Date())
       }
     } catch (error) {
@@ -57,6 +71,17 @@ const LiveUpdates = () => {
     } finally {
       setLoading(false)
     }
+  }
+
+  const notifyForNewCriticalHigh = (newAlerts) => {
+    if (!('Notification' in window) || Notification.permission !== 'granted') return
+    const newImportant = newAlerts.filter(a => (a.severity === 'critical' || a.severity === 'high') && !lastSeenAlertIdsRef.current.has(a.id))
+    newImportant.forEach(a => {
+      new Notification(`${a.severity.toUpperCase()} Alert: ${a.title}`, {
+        body: `${a.location} • ${a.source}`,
+      })
+      lastSeenAlertIdsRef.current.add(a.id)
+    })
   }
 
   const createSampleAlerts = async () => {
@@ -117,9 +142,21 @@ const LiveUpdates = () => {
     }
   }
 
-  const filteredAlerts = filter === 'all' 
-    ? alerts 
-    : alerts.filter(alert => alert.severity === filter)
+  const filteredAlerts = alerts
+    .filter(alert => filter === 'all' ? true : alert.severity === filter)
+    .filter(alert => {
+      if (!userLocation) return true
+      // If user provided a place string, match by inclusion; if GPS, skip server-side since alerts have text location
+      if (userLocation.place) {
+        const place = userLocation.place.toLowerCase()
+        return (
+          (alert.location || '').toLowerCase().includes(place) ||
+          (alert.title || '').toLowerCase().includes(place) ||
+          (alert.description || '').toLowerCase().includes(place)
+        )
+      }
+      return true
+    })
 
   const handleRefresh = () => {
     setLoading(true)
@@ -132,16 +169,16 @@ const LiveUpdates = () => {
         <div>
           <h1 className="text-3xl font-bold text-neutral-900 dark:text-white flex items-center">
             <Radio className="h-8 w-8 mr-3 text-red-500" />
-            Live Updates
+            {t.live.title}
           </h1>
           <p className="text-neutral-600 dark:text-neutral-400 mt-1">
-            Real-time disaster alerts and emergency information
+            {t.live.desc}
           </p>
         </div>
         
         <div className="flex items-center space-x-3">
           <div className="text-sm text-neutral-500 dark:text-neutral-400">
-            Last updated: {lastUpdated.toLocaleTimeString()}
+            {t.live.lastUpdated}: {lastUpdated.toLocaleTimeString()}
           </div>
           <button
             onClick={handleRefresh}
@@ -149,7 +186,7 @@ const LiveUpdates = () => {
             className="btn-outline flex items-center disabled:opacity-50"
           >
             <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-            Refresh
+            {t.live.refresh}
           </button>
         </div>
       </div>
@@ -158,7 +195,7 @@ const LiveUpdates = () => {
       <div className="card">
         <div className="flex flex-wrap items-center gap-3">
           <Filter className="h-4 w-4 text-neutral-500" />
-          <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Filter by severity:</span>
+          <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">{t.live.filterLabel}</span>
           
           {['all', 'critical', 'high', 'medium', 'low'].map((severity) => (
             <button
@@ -207,8 +244,8 @@ const LiveUpdates = () => {
             </h3>
             <p className="text-neutral-600 dark:text-neutral-400">
               {filter === 'all' 
-                ? 'There are currently no active alerts in your area.'
-                : `No ${filter} severity alerts at this time.`
+                ? t.live.noAlertsAll
+                : t.live.noAlertsSeverity(filter)
               }
             </p>
           </div>

@@ -4,25 +4,25 @@ import { Heart, Shield, Users, Globe, Mail, Phone, MapPin } from 'lucide-react'
 const About = () => {
   const team = [
     {
-      name: 'Dr. Sarah Johnson',
+      name: 'Dr. A. Sharma',
       role: 'Emergency Response Director',
-      bio: 'Former FEMA coordinator with 15+ years in disaster management',
+      bio: 'Former NDRF coordinator with 15+ years in disaster management',
       image: '👩‍⚕️'
     },
     {
-      name: 'Michael Chen',
+      name: 'R. Kumar',
       role: 'Technology Lead',
       bio: 'AI specialist focused on humanitarian applications',
       image: '👨‍💻'
     },
     {
-      name: 'Maria Rodriguez',
+      name: 'S. Iyer',
       role: 'Community Outreach Manager',
       bio: 'Multilingual coordinator connecting diverse communities',
       image: '👩‍🤝‍👩'
     },
     {
-      name: 'David Thompson',
+      name: 'P. Singh',
       role: 'Operations Manager',
       bio: 'Logistics expert ensuring efficient resource distribution',
       image: '👨‍💼'
@@ -57,7 +57,7 @@ const About = () => {
       {/* Hero Section */}
       <div className="text-center">
         <h1 className="text-4xl font-bold text-neutral-900 dark:text-white mb-4">
-          About HumanitarianAid
+          About ReliefConnect India
         </h1>
         <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
           We are dedicated to providing comprehensive disaster response solutions that connect communities, 
@@ -70,9 +70,8 @@ const About = () => {
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-4">Our Mission</h2>
           <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-4xl mx-auto leading-relaxed">
-            To leverage technology and human compassion to create a world where no community faces disaster alone. 
-            We provide the tools, resources, and connections needed to prepare for, respond to, and recover from 
-            humanitarian crises with dignity and hope.
+            To leverage technology and human compassion to ensure no community in India faces disaster alone. 
+            We provide tools, resources, and connections to prepare for, respond to, and recover from crises with dignity and hope.
           </p>
         </div>
       </div>
@@ -80,7 +79,7 @@ const About = () => {
       {/* Values */}
       <div>
         <h2 className="text-2xl font-bold text-neutral-900 dark:text-white text-center mb-8">Our Values</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {values.map((value, index) => (
             <div key={index} className="card text-center">
               <div className="bg-primary-100 dark:bg-primary-900 p-3 rounded-full w-fit mx-auto mb-4">
@@ -123,8 +122,8 @@ const About = () => {
         <h2 className="text-2xl font-bold text-neutral-900 dark:text-white text-center mb-8">Our Impact</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div>
-            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-1">50+</div>
-            <div className="text-sm text-neutral-600 dark:text-neutral-400">Countries Served</div>
+            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-1">28+</div>
+            <div className="text-sm text-neutral-600 dark:text-neutral-400">States & UTs Served</div>
           </div>
           <div>
             <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-1">1M+</div>
@@ -156,8 +155,8 @@ const About = () => {
             <div className="flex items-center">
               <Phone className="h-5 w-5 text-primary-600 dark:text-primary-400 mr-3" />
               <div>
-                <p className="font-medium text-neutral-900 dark:text-white">Emergency Hotline</p>
-                <p className="text-sm text-neutral-600 dark:text-neutral-400">1-800-HELP-NOW</p>
+              <p className="font-medium text-neutral-900 dark:text-white">Emergency Hotline</p>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400">112 (National)</p>
               </div>
             </div>
             <div className="flex items-center">
@@ -165,8 +164,8 @@ const About = () => {
               <div>
                 <p className="font-medium text-neutral-900 dark:text-white">Headquarters</p>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                  123 Relief Avenue<br />
-                  Emergency City, EC 12345
+                  12 Relief Avenue<br />
+                  New Delhi, 110001
                 </p>
               </div>
             </div>
@@ -202,18 +201,18 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-neutral-600 dark:text-neutral-400">
             <div>
               <p className="font-medium text-neutral-900 dark:text-white mb-1">Registration</p>
-              <p>501(c)(3) Non-Profit Organization</p>
-              <p>EIN: 12-3456789</p>
+              <p>Registered Non-Profit (India)</p>
+              <p>CIN: U99999DL2025NPO000000</p>
             </div>
             <div>
               <p className="font-medium text-neutral-900 dark:text-white mb-1">Certifications</p>
-              <p>GuideStar Gold Seal</p>
-              <p>Charity Navigator 4-Star</p>
+              <p>NGO Darpan Registered</p>
+              <p>CSR-1 Compliant</p>
             </div>
             <div>
               <p className="font-medium text-neutral-900 dark:text-white mb-1">Compliance</p>
-              <p>GDPR Compliant</p>
-              <p>SOC 2 Type II Certified</p>
+              <p>IT Act & Data Protection compliant</p>
+              <p>ISO 27001 aligned</p>
             </div>
           </div>
         </div>

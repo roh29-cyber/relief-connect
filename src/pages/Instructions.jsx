@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useLanguage } from '../contexts/LanguageContext'
 import { 
   Shield, 
   Zap, 
@@ -13,6 +14,7 @@ import {
 } from 'lucide-react'
 
 const Instructions = () => {
+  const { t } = useLanguage()
   const [selectedDisaster, setSelectedDisaster] = useState('earthquake')
   const [selectedPhase, setSelectedPhase] = useState('before')
   const [safetyGuide, setSafetyGuide] = useState('')
@@ -165,6 +167,51 @@ const Instructions = () => {
         </div>
       </div>
 
+      {/* Emergency Contacts - Moved up for better visibility */}
+      <div className="card bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800">
+        <h3 className="text-lg font-semibold text-red-800 dark:text-red-200 mb-4">
+          {t.emergencyContacts}
+        </h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+          <div className="flex justify-between">
+            <span className="text-red-700 dark:text-red-300">{t.national}:</span>
+            <span className="font-medium text-red-800 dark:text-red-200">112</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-red-700 dark:text-red-300">{t.police}:</span>
+            <span className="font-medium text-red-800 dark:text-red-200">100</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-red-700 dark:text-red-300">{t.ambulance}:</span>
+            <span className="font-medium text-red-800 dark:text-red-200">108</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-red-700 dark:text-red-300">{t.fire}:</span>
+            <span className="font-medium text-red-800 dark:text-red-200">101</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Emergency Kit Essentials - Moved up for better visibility */}
+      <div className="card bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+        <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-4">
+          {t.kitTitle}
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          {t.kitItems.map((item, index) => (
+            <div key={index} className="flex items-center space-x-2">
+              <input 
+                type="checkbox" 
+                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              <span className="text-sm text-blue-700 dark:text-blue-300">
+                {item}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Safety Guide */}
         <div className="lg:col-span-2">
@@ -208,61 +255,7 @@ const Instructions = () => {
             </div>
           </div>
 
-          {/* Emergency Kit Checklist */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Emergency Kit Essentials
-            </h3>
-            <div className="space-y-2">
-              {[
-                'Water (1 gallon per person per day)',
-                'Non-perishable food (3-day supply)',
-                'Battery-powered radio',
-                'Flashlight and extra batteries',
-                'First aid kit',
-                'Medications',
-                'Important documents',
-                'Cash and credit cards',
-                'Emergency contact information',
-                'Blankets and clothing'
-              ].map((item, index) => (
-                <div key={index} className="flex items-center space-x-2">
-                  <input 
-                    type="checkbox" 
-                    className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-                  />
-                  <span className="text-sm text-gray-700 dark:text-gray-300">
-                    {item}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
 
-          {/* Emergency Contacts */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Emergency Contacts
-            </h3>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Emergency Services:</span>
-                <span className="font-medium">911</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Poison Control:</span>
-                <span className="font-medium">1-800-222-1222</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Red Cross:</span>
-                <span className="font-medium">1-800-RED-CROSS</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">FEMA:</span>
-                <span className="font-medium">1-800-621-3362</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
