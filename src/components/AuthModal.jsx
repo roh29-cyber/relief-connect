@@ -23,17 +23,29 @@ const AuthModal = ({ onClose }) => {
     setError('')
 
     try {
-      const result = isLogin 
-        ? await login(formData.email, formData.password)
-        : await register(formData)
-
-      // login/register return the user object on success in our mock
-      if (result && (result.id || result.email)) {
-        onClose()
-      } else if (result && result.error) {
-        setError(result.error || 'Authentication failed')
+      if (isLogin) {
+        // Phone+OTP flow
+        if (!formData.phone) {
+          setError('Please enter your mobile number')
+          setLoading(false)
+          return
+        }
+        if (!formData.otpSent) {
+          setError('Please request OTP first')
+          setLoading(false)
+          return
+        }
+        if (formData.otp !== '1234') {
+          setError('Invalid OTP')
+          setLoading(false)
+          return
+        }
+        const mockEmail = `${formData.phone.replace(/\D/g, '')}@phone.local`
+        const result = await login(mockEmail, '')
+        if (result && (result.id || result.email)) onClose()
       } else {
-        onClose()
+        const result = await register(formData)
+        if (result && (result.id || result.email)) onClose()
       }
     } catch (err) {
       setError('An unexpected error occurred')
@@ -47,6 +59,15 @@ const AuthModal = ({ onClose }) => {
       ...formData,
       [e.target.name]: e.target.value
     })
+  }
+
+  const sendOtp = () => {
+    setError('')
+    if (!formData.phone || formData.phone.replace(/\D/g, '').length < 10) {
+      setError('Please enter a valid mobile number')
+      return
+    }
+    setFormData({ ...formData, otpSent: true })
   }
 
   return (
@@ -70,7 +91,7 @@ const AuthModal = ({ onClose }) => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
           {!isLogin && (
             <div>
               <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
@@ -89,16 +110,28 @@ const AuthModal = ({ onClose }) => {
 
           <div>
             <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
-              Email
+              Mobile number
             </label>
             <input
-              type="email"
-              name="email"
-              value={formData.email}
+              type="tel"
+              name="phone"
+              value={formData.phone}
               onChange={handleChange}
               className="input-field"
+              placeholder="e.g. +91 98xxxxxxxx"
               required
             />
+            {!formData.otpSent ? (
+              <div className="mt-3">
+                <button type="button" onClick={sendOtp} className="btn-primary">Send OTP</button>
+              </div>
+            ) : (
+              <div className="mt-3">
+                <label className="block text-sm font-medium mb-1">Enter OTP</label>
+                <input type="text" name="otp" value={formData.otp || ''} onChange={handleChange} className="input-field" placeholder="Enter 4-digit OTP" />
+                <div className="text-xs text-neutral-500 mt-2">(Use OTP <strong>1234</strong> for demo)</div>
+              </div>
+            )}
           </div>
 
           <div>

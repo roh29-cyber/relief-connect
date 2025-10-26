@@ -3,11 +3,13 @@ import { AlertTriangle, Radio, MapPin, Clock, Filter, RefreshCw } from 'lucide-r
 import { useDatabase } from '../contexts/DatabaseContext'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useAuth } from '../contexts/AuthContext'
+import AlertsMap from '../components/AlertsMap'
 
 const LiveUpdates = () => {
   const [alerts, setAlerts] = useState([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('all')
+  const [selectedRegion, setSelectedRegion] = useState('all')
   const [lastUpdated, setLastUpdated] = useState(new Date())
   const { executeQuery } = useDatabase()
   const { t } = useLanguage()
@@ -34,6 +36,13 @@ const LiveUpdates = () => {
     const interval = setInterval(loadAlerts, 30000)
     return () => clearInterval(interval)
   }, [])
+
+  // If user has a saved place, default the region filter to their place
+  useEffect(() => {
+    if (userLocation && userLocation.place && selectedRegion === 'all') {
+      setSelectedRegion(userLocation.place)
+    }
+  }, [userLocation])
 
   // Request notification permission once when mounting
   useEffect(() => {
@@ -95,40 +104,9 @@ const LiveUpdates = () => {
         return // Alerts already exist
       }
 
-      const sampleAlerts = [
-        {
-          title: 'Severe Thunderstorm Warning',
-          description: 'Severe thunderstorms with damaging winds and large hail expected across the region. Seek shelter immediately.',
-          severity: 'high',
-          location: 'Central Valley Region',
-          alert_type: 'weather',
-          source: 'National Weather Service'
-        },
-        {
-          title: 'Flash Flood Watch',
-          description: 'Heavy rainfall may cause flash flooding in low-lying areas. Avoid driving through flooded roads.',
-          severity: 'medium',
-          location: 'Riverside County',
-          alert_type: 'flood',
-          source: 'Emergency Management'
-        },
-        {
-          title: 'Evacuation Advisory',
-          description: 'Voluntary evacuation recommended for residents in fire-prone areas due to extreme fire weather conditions.',
-          severity: 'critical',
-          location: 'Mountain Communities',
-          alert_type: 'wildfire',
-          source: 'Fire Department'
-        },
-        {
-          title: 'Power Outage Update',
-          description: 'Widespread power outages affecting approximately 15,000 customers. Restoration efforts underway.',
-          severity: 'low',
-          location: 'Downtown District',
-          alert_type: 'infrastructure',
-          source: 'Utility Company'
-        }
-      ]
+      // Use localized sample alerts from language context if available
+      const localizedSamples = (t && t.live && t.live.sampleAlerts) ? t.live.sampleAlerts : []
+      const sampleAlerts = localizedSamples.length > 0 ? localizedSamples : []
 
       for (const alert of sampleAlerts) {
         await executeQuery(`
@@ -145,6 +123,12 @@ const LiveUpdates = () => {
   const filteredAlerts = alerts
     .filter(alert => filter === 'all' ? true : alert.severity === filter)
     .filter(alert => {
+      // Region filter
+      if (selectedRegion && selectedRegion !== 'all') {
+        // Use substring match so 'Hyderabad' matches 'Hyderabad (GHMC area)'
+        const sel = (selectedRegion || '').toLowerCase()
+        return (alert.location || '').toLowerCase().includes(sel)
+      }
       if (!userLocation) return true
       // If user provided a place string, match by inclusion; if GPS, skip server-side since alerts have text location
       if (userLocation.place) {
@@ -210,6 +194,28 @@ const LiveUpdates = () => {
               {severity.charAt(0).toUpperCase() + severity.slice(1)}
             </button>
           ))}
+          {/* Region selector */}
+          <div className="ml-4">
+            <label className="text-sm text-neutral-600 dark:text-neutral-400 mr-2">Region:</label>
+            <select
+              value={selectedRegion}
+              onChange={(e) => setSelectedRegion(e.target.value)}
+              className="input-field text-sm"
+            >
+              <option value="all">All</option>
+              {/* Build unique regions from alerts */}
+              {Array.from(new Set(alerts.map(a => a.location).filter(Boolean))).map((loc) => (
+                <option key={loc} value={loc}>{loc}</option>
+              ))}
+            </select>
+            <button
+              type="button"
+              onClick={() => setSelectedRegion('all')}
+              className="ml-2 text-sm btn-outline"
+            >
+              Show all
+            </button>
+          </div>
         </div>
       </div>
 
@@ -227,6 +233,11 @@ const LiveUpdates = () => {
             </div>
           )
         })}
+      </div>
+
+      {/* Map of alerts */}
+      <div className="mb-4">
+        <AlertsMap alerts={alerts} userLocation={userLocation} />
       </div>
 
       {/* Alerts List */}
@@ -309,9 +320,9 @@ const LiveUpdates = () => {
               Emergency Information
             </h3>
             <div className="text-sm text-red-700 dark:text-red-300 space-y-1">
-              <p>• For life-threatening emergencies, call 911 immediately</p>
+              <p>• For life-threatening emergencies in India, call 112 immediately</p>
               <p>• Follow official evacuation orders without delay</p>
-              <p>• Stay tuned to local emergency broadcasts</p>
+              <p>• Stay tuned to local emergency broadcasts and district disaster response teams</p>
               <p>• Keep emergency supplies ready and accessible</p>
             </div>
           </div>

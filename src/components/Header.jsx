@@ -3,11 +3,13 @@ import { Menu, Sun, Moon, Heart } from 'lucide-react'
 import { useTheme } from '../contexts/ThemeContext'
 import { useAuth } from '../contexts/AuthContext'
 import { useLanguage } from '../contexts/LanguageContext'
+import { useNavigate } from 'react-router-dom'
 
 const Header = ({ onMenuClick }) => {
   const { isDark, toggleTheme } = useTheme()
   const { user, logout } = useAuth()
   const { lang, setLang } = useLanguage()
+  const navigate = useNavigate()
 
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
@@ -70,7 +72,7 @@ const Header = ({ onMenuClick }) => {
                 </button>
               </div>
             ) : (
-              <button className="btn-primary text-sm">
+              <button onClick={() => navigate('/login')} className="btn-primary text-sm">
                 {useLanguage().t.header.signIn}
               </button>
             )}

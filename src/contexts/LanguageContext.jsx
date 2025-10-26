@@ -28,6 +28,56 @@ const translations = {
       filterLabel: 'Filter by severity:',
       noAlertsAll: 'There are currently no active alerts in your area.',
       noAlertsSeverity: (sev) => `No ${sev} severity alerts at this time.`,
+      sampleAlerts: [
+        {
+          title: 'Severe Cyclonic Storm Warning',
+          description: 'A severe cyclonic storm is expected to make landfall. Strong winds and heavy rain likely; secure loose objects and follow evacuation orders.',
+          severity: 'critical',
+          location: 'Odisha Coast',
+          alert_type: 'weather',
+          source: 'India Meteorological Department (IMD)'
+        },
+        {
+          title: 'Flash Flood Alert',
+          description: 'Intense rainfall has caused water levels to rise rapidly in low-lying areas. Avoid flooded roads and move to higher ground if necessary.',
+          severity: 'high',
+          location: 'Assam (Brahmaputra basin)',
+          alert_type: 'flood',
+          source: 'State Disaster Management Authority'
+        },
+        {
+          title: 'Forest Fire Evacuation Notice',
+          description: 'Rapid spread of wildfires in hill slopes. Immediate evacuation advised for nearby settlements.',
+          severity: 'high',
+          location: 'Uttarakhand - Chamoli District',
+          alert_type: 'wildfire',
+          source: 'Forest Department'
+        },
+        {
+          title: 'Widespread Power Outage',
+          description: 'Power supply disrupted across multiple wards due to grid damage. Crews are working on restoration; expect intermittent outages.',
+          severity: 'medium',
+          location: 'Mumbai Suburban',
+          alert_type: 'infrastructure',
+          source: 'Local Electricity Distribution Company'
+        },
+        {
+          title: 'Urban Flooding and Road Closures',
+          description: 'Heavy overnight rains have caused flooding in low-lying areas and major arterial roads. Commuters should avoid vulnerable routes.',
+          severity: 'high',
+          location: 'Hyderabad (GHMC area)',
+          alert_type: 'flood',
+          source: 'Greater Hyderabad Municipal Corporation (GHMC)'
+        },
+        {
+          title: 'Coastal Evacuation Advisory',
+          description: 'High tidal surges expected along the coastline. Coastal residents should move to temporary shelters until the advisory is lifted.',
+          severity: 'critical',
+          location: 'Chennai Coastline',
+          alert_type: 'storm_surge',
+          source: 'IMD / Local Authorities'
+        }
+      ],
       source: 'Source:',
     },
     emergency: {
@@ -73,6 +123,56 @@ const translations = {
       filterLabel: 'गंभीरता के अनुसार फ़िल्टर:',
       noAlertsAll: 'आपके क्षेत्र में फिलहाल कोई सक्रिय अलर्ट नहीं है।',
       noAlertsSeverity: (sev) => `फिलहाल ${sev} स्तर के अलर्ट नहीं हैं।`,
+      sampleAlerts: [
+        {
+          title: 'तूफान चेतावनी',
+          description: 'एक तीव्र चक्रवात तट पर प्रभाव डालने की संभावना है। तेज हवाएँ और भारी वर्षा हो सकती है; सुरक्षित स्थान पर जाएँ और आवश्यकतानुसार निकासी का पालन करें।',
+          severity: 'critical',
+          location: 'ओडिशा तट',
+          alert_type: 'weather',
+          source: 'भारतीय मौसम विभाग (IMD)'
+        },
+        {
+          title: 'तुरन्त बाढ़ चेतावनी',
+          description: 'तीव्र वर्षा से निचले इलाकों में जलस्तर तेज़ी से बढ़ रहा है। बाढ़ वाले रास्तों से बचें और आवश्यकता होने पर ऊँचे स्थानों पर चले जाएं।',
+          severity: 'high',
+          location: 'असम (ब्रह्मपुत्र बेसिन)',
+          alert_type: 'flood',
+          source: 'राज्य आपदा प्रबंधन प्राधिकरण'
+        },
+        {
+          title: 'जंगल में आग निकासी सूचना',
+          description: 'पहाड़ी ढलानों पर जंगल की आग तेजी से फैल रही है। पास के बस्तियों के लिए तुरंत निकासी की सलाह दी जाती है।',
+          severity: 'high',
+          location: 'उत्तराखंड - चमोली जिला',
+          alert_type: 'wildfire',
+          source: 'वन विभाग'
+        },
+        {
+          title: 'बड़ी बिजली कटौती',
+          description: 'ग्रिड क्षति के कारण कई वार्डों में बिजली आपूर्ति प्रभावित। मरम्मत कार्य जारी है; अंतराल हो सकते हैं।',
+          severity: 'medium',
+          location: 'मुंबई उपनगरीय',
+          alert_type: 'infrastructure',
+          source: 'स्थानीय विद्युत वितरण कंपनी'
+        },
+        {
+          title: 'शहरी बाढ़ और सड़क बंद',
+          description: 'रात भर भारी वर्षा से निचले इलाकों और प्रमुख रास्तों में जलभराव हुआ है। यात्रियों को संवेदनशील मार्गों से बचना चाहिए।',
+          severity: 'high',
+          location: 'हैदराबाद (GHMC क्षेत्र)',
+          alert_type: 'flood',
+          source: 'ग्रेटर हैदराबाद म्युनिसिपल कॉर्पोरेशन (GHMC)'
+        },
+        {
+          title: 'तटीय निकासी सलाह',
+          description: 'तटरेखा पर ऊँचे ज्वार की आशंका है। तटीय निवासी अस्थायी शरण स्थलों में चले जाएँ।',
+          severity: 'critical',
+          location: 'चेन्नई तट',
+          alert_type: 'storm_surge',
+          source: 'IMD / स्थानीय अधिकारी'
+        }
+      ],
       source: 'स्रोत:',
     },
     emergency: {
@@ -118,6 +218,56 @@ const translations = {
       filterLabel: 'తీవ్రత ప్రకారం ఫిల్టర్:',
       noAlertsAll: 'మీ ప్రాంతంలో ప్రస్తుతం హెచ్చరికలు లేవు.',
       noAlertsSeverity: (sev) => `ప్రస్తుతం ${sev} హెచ్చరికలు లేవు.`,
+      sampleAlerts: [
+        {
+          title: 'తీవ్రమైన తుపాను హెచ్చరిక',
+          description: 'తీవ్రమైన తుపాను తీరంపై ప్రభావం చూపే అవకాశం ఉంది. బలమైన గాలులు మరియు భారీ వర్షం ఉండొచ్చు; అవసరమైతే ఎవాక్యుయేట్ చేయండి.',
+          severity: 'critical',
+          location: 'ఒడిశా తీరము',
+          alert_type: 'weather',
+          source: 'ఇండియా మెట్ రికలజికల్ డిపార్ట్‌మెంట్ (IMD)'
+        },
+        {
+          title: 'ఫ్లాష్ వరద హెచ్చరిక',
+          description: 'తీవ్ర వర్షం కారణంగా నీటి స్థాయిలు వేగంగా పెరుగుతున్నాయి. వరద ప్రాంతాలు మరియు బాహుబల రహదారులను এవాయిడ్ చేయండి.',
+          severity: 'high',
+          location: 'అస్సాం (బ్రహ్మపుత్రా бассేన్)',
+          alert_type: 'flood',
+          source: 'రాజ్య అత్యవసర నిర్వహణ సంస్థ'
+        },
+        {
+          title: 'అరణ్య మంటల నుంచి నిరాకరణ సూచన',
+          description: 'పర్వతాల బాగా అగ్నిప్రమాదం వేగంగా వ్యాప్తి చెందుతోంది. సమీప గ్రామాల కోసం తక్షణం నిరాకరణ సలహా.',
+          severity: 'high',
+          location: 'ఉత్తరాఖండ్ - చమోలి జిల్లా',
+          alert_type: 'wildfire',
+          source: ' వన విభాగం'
+        },
+        {
+          title: 'విస్తృత విద్యుత్ విఫలమయ్యింది',
+          description: 'గ్రిడ్ నష్టంతో అనేక వార్డులలో విద్యుత్ సరఫరా విఫలమైంది. రెస్టోరేషన్ పని కొనసాగుతోంది; విరామాలు ఉండొచ్చు.',
+          severity: 'medium',
+          location: 'ముంబాయి ఉపనగర',
+          alert_type: 'infrastructure',
+          source: 'స్థానిక విద్యుత్ పంపిణీ సంస్థ'
+        },
+        {
+          title: 'నగరఫలం వరదలు మరియు రోడ్డు మూసివేతలు',
+          description: 'నిందలో భారీ వర్షాల కారణంగా రోడ్లలో మరియు లో-లయింగ్ ప్రాంతాల్లో నీరు నిలిచిపోయింది. పర్యటనదారులు ప్రమాదకర మార్గాలను నివారించాలి.',
+          severity: 'high',
+          location: 'హైదరాబాదు (GHMC ప్రాంతం)',
+          alert_type: 'flood',
+          source: 'గ్రేటర్ హైదరాబాదు మునిసిపల్ కార్పొరేషన్ (GHMC)'
+        },
+        {
+          title: 'తీరవ సహాయ సూచన',
+          description: 'తీరప్రాంతాల్లో అధిక జ్వార్లు ఉంటాయని అంచనా. తీరవాసులు తాత్కాలిక శ్రేయోభిలాష స్థలాలకు వెళ్లండి.',
+          severity: 'critical',
+          location: 'చెన్నై తీరము',
+          alert_type: 'storm_surge',
+          source: 'IMD / స్థానిక అధికారులు'
+        }
+      ],
       source: 'మూలం:',
     },
     emergency: {

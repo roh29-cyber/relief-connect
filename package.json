@@ -7,16 +7,19 @@
     "dev": "vite",
     "start": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server:start": "node server/index.js"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.1",
-    "lucide-react": "^0.263.1",
     "chart.js": "^4.3.0",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^0.263.1",
+    "pdfjs-dist": "^3.11.174",
+    "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
-    "pdfjs-dist": "^3.11.174"
+    "react-dom": "^18.2.0",
+    "react-leaflet": "^4.2.1",
+    "react-router-dom": "^6.8.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

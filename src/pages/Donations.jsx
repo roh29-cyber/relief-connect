@@ -150,237 +150,151 @@ const Donations = () => {
 
       {activeTab === 'donate' && (
         <div className="space-y-6">
-          {/* Donation Type Selection */}
           <div className="card">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              How would you like to help?
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <button
-                onClick={() => setDonationType('money')}
-                className={`p-4 rounded-lg border-2 transition-all duration-200 ${
-                  donationType === 'money'
-                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                    : 'border-gray-200 dark:border-gray-600 hover:border-gray-300'
-                }`}
-              >
-                <IndianRupee className="h-8 w-8 text-primary-600 dark:text-primary-400 mx-auto mb-2" />
-                <h3 className="font-medium text-gray-900 dark:text-white">
-                  Monetary Donation
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                  Flexible funding for immediate needs
-                </p>
-              </button>
-              
-              <button
-                onClick={() => setDonationType('supplies')}
-                className={`p-4 rounded-lg border-2 transition-all duration-200 ${
-                  donationType === 'supplies'
-                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                    : 'border-gray-200 dark:border-gray-600 hover:border-gray-300'
-                }`}
-              >
-                <Package className="h-8 w-8 text-primary-600 dark:text-primary-400 mx-auto mb-2" />
-                <h3 className="font-medium text-gray-900 dark:text-white">
-                  Supply Donation
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                  Physical items and supplies
-                </p>
-              </button>
-              
-              <button
-                onClick={() => setDonationType('food')}
-                className={`p-4 rounded-lg border-2 transition-all duration-200 ${
-                  donationType === 'food'
-                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                    : 'border-gray-200 dark:border-gray-600 hover:border-gray-300'
-                }`}
-              >
-                <Heart className="h-8 w-8 text-primary-600 dark:text-primary-400 mx-auto mb-2" />
-                <h3 className="font-medium text-gray-900 dark:text-white">
-                  Food Donation
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                  Meals and non-perishable food
-                </p>
-              </button>
-            </div>
-          </div>
-
-          {/* Active Campaigns */}
-          <div className="card">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
-              Active Campaigns
-            </h2>
-            <div className="space-y-6">
-              {campaigns.map((campaign) => (
-                <div key={campaign.id} className="border border-gray-200 dark:border-gray-600 rounded-lg p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <div className="flex items-center mb-2">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                          {campaign.title}
-                        </h3>
-                        {campaign.urgent && (
-                          <span className="ml-2 px-2 py-1 text-xs bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 rounded-full">
-                            Urgent
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        {campaign.description}
-                      </p>
-                    </div>
-                    <button className="btn-primary">
-                      Donate Now
-                    </button>
-                  </div>
-                  
-                  <div className="mb-4">
-                    <div className="flex justify-between text-sm mb-2">
-                      <span className="text-gray-600 dark:text-gray-300">
-                        ₹{campaign.raised.toLocaleString('en-IN')} raised
-                      </span>
-                      <span className="text-gray-600 dark:text-gray-300">
-                        ₹{campaign.goal.toLocaleString('en-IN')} goal
-                      </span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div 
-                        className="bg-primary-600 h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${(campaign.raised / campaign.goal) * 100}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
-                    <Users className="h-4 w-4 mr-1" />
-                    {campaign.donors} donors
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Donation Form */}
-          {donationType === 'money' && (
-            <div className="card">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                Make a Donation
-              </h2>
-              <form className="space-y-4">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Donate to trusted channels</h2>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">To ensure funds are used efficiently, please donate directly to national government relief funds or well-known, registered NGOs:</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <a href="https://indianredcross.org/donate/" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition flex items-center">
+                <img src="/assets/logo-indian-red-cross.svg" alt="Indian Red Cross" className="w-12 h-12 mr-4 flex-shrink-0" />
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Donation Amount
-                  </label>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-                    {[500, 1000, 2500, 5000].map((amount) => (
-                      <button
-                        key={amount}
-                        type="button"
-                        className="py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-lg hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
-                      >
-                        ₹{amount.toLocaleString()}
-                      </button>
-                    ))}
-                  </div>
-                  <input
-                    type="number"
-                    placeholder="Custom amount (₹)"
-                    className="input-field"
-                  />
+                  <h3 className="font-semibold">Indian Red Cross Society — Donate</h3>
+                  <p className="text-sm text-gray-600">Donate to Indian Red Cross disaster relief efforts.</p>
                 </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Full Name
-                    </label>
-                    <input type="text" className="input-field" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Email Address
-                    </label>
-                    <input type="email" className="input-field" />
-                  </div>
-                </div>
-                
+              </a>
+
+              <a href="https://www.unicef.org/india/donate" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition flex items-center">
+                <img src="/assets/logo-cry.svg" alt="UNICEF India" className="w-12 h-12 mr-4 flex-shrink-0" />
                 <div>
-                  <label className="flex items-center">
-                    <input type="checkbox" className="rounded border-gray-300 text-primary-600 focus:ring-primary-500 mr-2" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">
-                      Make this a monthly recurring donation
-                    </span>
-                  </label>
+                  <h3 className="font-semibold">UNICEF India — Donate</h3>
+                  <p className="text-sm text-gray-600">Donate to UNICEF India's programs for children in emergencies.</p>
                 </div>
-                
-                <button type="submit" className="btn-primary w-full">
-                  Complete Donation
-                </button>
-              </form>
+              </a>
+
+              <a href="https://www.pmcares.gov.in/donate/" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition">
+                <h3 className="font-semibold">PM CARES Fund — Donate</h3>
+                <p className="text-sm text-gray-600">Donate directly to the official PM CARES donation page.</p>
+              </a>
+
+              <a href="https://ndma.gov.in/" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition">
+                <h3 className="font-semibold">National Disaster Management Authority (NDMA)</h3>
+                <p className="text-sm text-gray-600">Official information and links to state-level relief channels.</p>
+              </a>
+
+              <a href="https://www.giveindia.org/donate" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition">
+                <h3 className="font-semibold">GiveIndia — Donate</h3>
+                <p className="text-sm text-gray-600">Donate via GiveIndia's secure donation flow.</p>
+              </a>
+
+              <a href="https://nss.gov.in" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition flex items-center">
+                <div className="w-12 h-12 mr-4 flex-shrink-0 flex items-center justify-center">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="8" fill="#1565c0"/>
+                    <path d="M8 20h32v6H8zM8 30h32v6H8z" fill="#fff"/>
+                    <circle cx="24" cy="14" r="4" fill="#fff"/>
+                    <text x="24" y="42" textAnchor="middle" fontSize="8" fill="#fff" fontWeight="bold">NSS</text>
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold">National Service Scheme (NSS) — Donate</h3>
+                  <p className="text-sm text-gray-600">Support NSS disaster relief and community service programs.</p>
+                </div>
+              </a>
+
+              <a href="https://www.goonj.org/donate/" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition flex items-center">
+                <img src="/assets/logo-goonj.svg" alt="Goonj" className="w-12 h-12 mr-4 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold">Goonj — Donate</h3>
+                  <p className="text-sm text-gray-600">Support Goonj's relief operations through their donation page.</p>
+                </div>
+              </a>
             </div>
-          )}
+            <p className="text-sm text-gray-500 mt-4">If you prefer, donate directly through the official state disaster relief portals for your region.</p>
+          </div>
         </div>
       )}
 
       {activeTab === 'volunteer' && (
         <div className="space-y-6">
-          {/* Volunteer Opportunities */}
           <div className="card">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
-              Volunteer Opportunities
-            </h2>
-            <div className="space-y-4">
-              {volunteerOpportunities.map((opportunity) => (
-                <div key={opportunity.id} className="border border-gray-200 dark:border-gray-600 rounded-lg p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <div className="flex items-center mb-2">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                          {opportunity.title}
-                        </h3>
-                        {opportunity.urgent && (
-                          <span className="ml-2 px-2 py-1 text-xs bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 rounded-full">
-                            Urgent Need
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-gray-600 dark:text-gray-300 mb-3">
-                        {opportunity.description}
-                      </p>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                        <div className="flex items-center text-gray-600 dark:text-gray-300">
-                          <MapPin className="h-4 w-4 mr-1" />
-                          {opportunity.location}
-                        </div>
-                        <div className="flex items-center text-gray-600 dark:text-gray-300">
-                          <Clock className="h-4 w-4 mr-1" />
-                          {opportunity.timeCommitment}
-                        </div>
-                        <div className="flex items-center text-gray-600 dark:text-gray-300">
-                          <Star className="h-4 w-4 mr-1" />
-                          {opportunity.skills.join(', ')}
-                        </div>
-                      </div>
-                    </div>
-                    <button className="btn-primary">
-                      Apply Now
-                    </button>
-                  </div>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Volunteer - ways anyone can help</h2>
+            <p className="text-gray-600 dark:text-gray-300 mb-3">These organizations accept general volunteers or have easy, non-technical ways for citizens to help (donation drives, packing, distribution, community kitchens, local coordination).</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <a href="https://www.indianredcross.org/volunteer/" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition flex items-center">
+                <img src="/assets/logo-indian-red-cross.svg" alt="Indian Red Cross" className="w-12 h-12 mr-4 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold">Indian Red Cross Society</h3>
+                  <p className="text-sm text-gray-600">Local chapters run blood drives, first aid training, and relief distribution.</p>
                 </div>
-              ))}
+              </a>
+
+              <a href="https://goonj.org/volunteer/" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition flex items-center">
+                <img src="/assets/logo-goonj.svg" alt="Goonj" className="w-12 h-12 mr-4 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold">Goonj</h3>
+                  <p className="text-sm text-gray-600">Disaster relief and rural development — collection drives, packing and distribution.</p>
+                </div>
+              </a>
+
+              <a href="https://robinhoodarmy.com" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition flex items-center">
+                <img src="/assets/logo-robin-hood-army.svg" alt="Robin Hood Army" className="w-12 h-12 mr-4 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold">Robin Hood Army</h3>
+                  <p className="text-sm text-gray-600">Community volunteers redistribute surplus food to those in need.</p>
+                </div>
+              </a>
+
+              <a href="https://www.teachforindia.org" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition flex items-center">
+                <img src="/assets/logo-teach-for-india.svg" alt="Teach For India" className="w-12 h-12 mr-4 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold">Teach For India</h3>
+                  <p className="text-sm text-gray-600">Volunteer to teach and mentor underprivileged children.</p>
+                </div>
+              </a>
+
+              <a href="https://www.youthforseva.org" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition flex items-center">
+                <img src="/assets/logo-youth-for-seva.svg" alt="Youth for Seva" className="w-12 h-12 mr-4 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold">Youth for Seva</h3>
+                  <p className="text-sm text-gray-600">Volunteers support education, environment, and health programs.</p>
+                </div>
+              </a>
+
+              <a href="https://www.feedingindia.org" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition flex items-center">
+                <img src="/assets/logo-feeding-india.svg" alt="Feeding India" className="w-12 h-12 mr-4 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold">Feeding India</h3>
+                  <p className="text-sm text-gray-600">Work to end hunger and food waste — many on-ground volunteer roles.</p>
+                </div>
+              </a>
+
+              <a href="https://nss.gov.in" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition flex items-center">
+                <div className="w-12 h-12 mr-4 flex-shrink-0 flex items-center justify-center">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="8" fill="#1565c0"/>
+                    <path d="M8 20h32v6H8zM8 30h32v6H8z" fill="#fff"/>
+                    <circle cx="24" cy="14" r="4" fill="#fff"/>
+                    <text x="24" y="42" textAnchor="middle" fontSize="8" fill="#fff" fontWeight="bold">NSS</text>
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold">National Service Scheme (NSS)</h3>
+                  <p className="text-sm text-gray-600">Government-supported student volunteering program across colleges.</p>
+                </div>
+              </a>
+
+              <a href="https://www.cry.org/volunteer" target="_blank" rel="noreferrer" className="p-4 border rounded-lg hover:shadow-md transition flex items-center">
+                <img src="/assets/logo-cry.svg" alt="CRY" className="w-12 h-12 mr-4 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold">CRY (Child Rights and You)</h3>
+                  <p className="text-sm text-gray-600">Volunteer for child welfare, education and protection programs.</p>
+                </div>
+              </a>
             </div>
           </div>
 
-          {/* Volunteer Registration Form */}
+          {/* Volunteer Registration Form (kept for users who want to register through this app) */}
           <div className="card">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              Volunteer Registration
-            </h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Register as a volunteer (optional)</h2>
             <form onSubmit={handleVolunteerSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
